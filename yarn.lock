@@ -25,6 +25,11 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@date-io/core@^1.3.8":
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/@date-io/core/-/core-1.3.8.tgz#a20da7125f1444631dd96a6e8baa8982665aaa95"
+  integrity sha512-XlvpzhipF/badZEJPAfgXRX9bFG2UpFl1T6O0hn1RzWJf3yexf9/M2wcEm6jh7RVyrlSayttkXtGPqVPdoJQ7Q==
+
 "@emotion/hash@^0.7.1":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.7.2.tgz#53211e564604beb9befa7a4400ebf8147473eeef"
@@ -35,7 +40,7 @@
   resolved "https://registry.yarnpkg.com/@jetbrains/gen-idea-libs/-/gen-idea-libs-1.0.11.tgz#8d04ecd798b743ec828b6fede078bf063bcd6b38"
   integrity sha512-SfnzO+gYZIyhUbYHUiCbJDTuwpOorSf5zs2zOuzxn5Cx7OvdJJo5Y59vgZLRw7/b3POjMT5ib+yu5cWfWhekWQ==
 
-"@jetbrains/kotlin-extensions@^1.0.1-pre.58":
+"@jetbrains/kotlin-extensions@^1.0.1-pre.58", "@jetbrains/kotlin-extensions@^1.0.1-pre.67":
   version "1.0.1-pre.67"
   resolved "https://registry.yarnpkg.com/@jetbrains/kotlin-extensions/-/kotlin-extensions-1.0.1-pre.67.tgz#87d6f585839de9d7f18dbcb22d64c2ab79874c47"
   integrity sha512-C6ZpK5G2tqmPSmVblDliPjtg1dA1MC5rt5JUY/8eEliFQfRy9/OeYvSuBtn4/zPJ7IR3IUhekdZmBJqbvTxoxA==
@@ -1217,6 +1222,11 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
+
+core-js@2.5.7:
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
+  integrity sha512-RszJCAxg/PP6uzXVXL6BsxSXx/B05oJAQ2vkJRjyjrEcNVycaqOmNb5OTxZPE3xa5gwZduqza6L9JOCenh/Ecw==
 
 core-js@^2.5.7:
   version "2.6.9"
@@ -3019,7 +3029,7 @@ kotlin-compiler@^1.3.0:
   resolved "https://registry.yarnpkg.com/kotlin-compiler/-/kotlin-compiler-1.3.40.tgz#c42d0ca4c460974c7f95cf3dabc871975e0f498f"
   integrity sha512-YKas0ez3n+Q6Cn4ZhlzyxI4BmxORaXgZRYPiRjR3C0wcquL3hzvGwmK1bLICokMi1IaKuLLJNUttPEISd7AUag==
 
-kotlin@^1.3.0:
+kotlin@1.3.40, kotlin@^1.3.0:
   version "1.3.40"
   resolved "https://registry.yarnpkg.com/kotlin/-/kotlin-1.3.40.tgz#66d3ec57b16a92918a8029ce731d0099acc5d71a"
   integrity sha512-3l718c3QznxsFNUrnsyGworQZrczyzKRhf+Rx/+7XhSS95S/QrCnlUVuEXA1l9iJpfxx4t9Ecc7+jC1JD28aYg==
