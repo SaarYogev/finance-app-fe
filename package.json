@@ -28,7 +28,7 @@
     "eject": "react-scripts-kotlin eject",
     "gen-idea-libs": "react-scripts-kotlin gen-idea-libs",
     "get-types": "react-scripts-kotlin get-types --dest=src/types",
-    "preinstall": "sudo yarn cache clean -f; sudo yarn global n; sudo n stable; npm rebuild node-sass",
+    "preinstall": "yarn cache clean -f; yarn global n; n stable; npm rebuild node-sass",
     "postinstall": "npm rebuild node-sass",
     "predeploy": "react-scripts-kotlin build",
     "deploy": "gh-pages -d output"
