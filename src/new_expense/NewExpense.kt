@@ -43,7 +43,7 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
         }
         div {
             TextField {
-                attrs { type = "datetime-local"; defaultValue = "2017-05-24T10:30" }
+                attrs { type = "datetime-local"; defaultValue = "2017-05-24T10:30"; label = "Date" }
             }
         }
         Button {
