@@ -22,7 +22,7 @@
     "gen-idea-libs": "react-scripts-kotlin gen-idea-libs",
     "get-types": "react-scripts-kotlin get-types --dest=src/types",
     "postinstall": "npm run gen-idea-libs",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "react-scripts-kotlin build",
+    "deploy": "gh-pages -d output"
   }
 }
