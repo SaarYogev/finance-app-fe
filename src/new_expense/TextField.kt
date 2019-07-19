@@ -12,4 +12,6 @@ external interface TextFieldProps : RProps {
     var type: String
     var label: String
     var defaultValue: String
+    var value: String
+    var onChange: () -> Unit
 }

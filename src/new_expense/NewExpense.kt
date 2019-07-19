@@ -41,9 +41,10 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
                 attrs { label = "Payment Method" }
             }
         }
+        var date = "2017-05-24T10:30"
         div {
             TextField {
-                attrs { type = "datetime-local"; defaultValue = "2017-05-24T10:30"; label = "Date" }
+                attrs { type = "datetime-local"; defaultValue = date; label = "Date"; onChange = { date = value } }
             }
         }
         Button {
