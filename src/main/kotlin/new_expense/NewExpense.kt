@@ -2,12 +2,15 @@ package new_expense
 
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import org.w3c.fetch.RequestInit
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.div
 import react.dom.h1
+import kotlin.browser.window
+import kotlin.js.json
 
 interface TickerProps : RProps {
     var startFrom: Int
@@ -90,6 +93,24 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
         println(type)
         println(paymentMethod)
         println(date)
+        val jsonBody = JSON.stringify(json().apply {
+            this["amount"] = amount
+            this["type"] = type
+            this["paymentMethod"] = paymentMethod
+            this["date"] = date
+        })
+        println(jsonBody)
+        val backendUrl = "https://finance-tictactoe-be.herokuapp.com/expense"
+//        with fetch
+//        window.fetch(backendUrl, jsonAs<RequestInit>().apply {
+//            method = "POST"
+//            headers = JSON.stringify(json().apply {
+//                this["Content-Type"] = "application/json"
+//            })
+//            body = jsonBody
+//        }).catch { println("Problem!") }
+//        with XMLHttpRequest
+//        val client = HttpClient()
     }
 }
 
@@ -98,3 +119,5 @@ fun RBuilder.newExpenseForm(startFrom: Int = 0) = child(NewExpense::class) {
 }
 
 fun Event.getInputValue(): String = (this.target as HTMLInputElement).value
+
+fun <T> jsonAs(): T = js("({})") as T
