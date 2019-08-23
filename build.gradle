@@ -86,6 +86,10 @@ kotlinFrontend {
         dependency 'svg-inline-loader'
         dependency 'react-svg-loader'
         dependency 'svg-url-loader'
+        dependency 'bufferutil'
+        dependency 'utf-8-validate'
+        dependency 'text-encoding'
+        dependency 'fs'
     }
     webpackBundle {
         bundleName = 'main'
