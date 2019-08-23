@@ -108,38 +108,23 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
             println(type)
             println(paymentMethod)
             println(date)
-//        val jsonBody = Json.parse(JSON.stringify(json().apply {
-//            this["amount"] = amount
-//            this["type"] = type
-//            this["paymentMethod"] = paymentMethod
-//            this["date"] = date
-//        }))
             val expense = Expense(amount.toInt(), type, paymentMethod, Date(date))
             val expenseJson = JSON.stringify(expense)
             println(expense)
             val corsAnywhere = "https://cors-anywhere.herokuapp.com/"
             val backendUrl = corsAnywhere + "https://finance-app-be.herokuapp.com/expenseString"
-            val client = HttpClient(Js) {
-//                install(JsonFeature) {
-//                    serializer = KotlinxSerializer()
-//                }
-            }
+            val client = HttpClient(Js)
             launch {
                 println("started post")
                 try {
                     client.post<String> {
                         url(backendUrl)
                         body = expenseJson
-                        //                contentType(ContentType.Application.Json)
                     }
                 } catch (e: Exception) {
                     println("oops, exception: $e")
                 }
-                println("finished post")
             }
-            println("finished function")
-        } else {
-            println("Fail")
         }
 
     }
