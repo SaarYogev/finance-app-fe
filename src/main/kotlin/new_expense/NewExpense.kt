@@ -1,15 +1,28 @@
 package new_expense
 
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.js.Js
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.post
+import io.ktor.client.request.url
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.serialization.ImplicitReflectionSerializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import org.w3c.fetch.RequestInit
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.div
 import react.dom.h1
-import kotlin.browser.window
+import kotlin.coroutines.CoroutineContext
+import kotlin.js.Date
 import kotlin.js.json
 
 interface TickerProps : RProps {
@@ -20,7 +33,11 @@ interface TickerState : RState {
     var secondsElapsed: Int
 }
 
-class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(props) {
+class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(props), CoroutineScope {
+    private var job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job
+
     override fun TickerState.init(props: TickerProps) {
         secondsElapsed = props.startFrom
     }
@@ -86,31 +103,45 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
     }
 
     private fun saveExpenseFromForm(amount: String?, type: String?, paymentMethod: String?, date: String?) {
-        if (amount == null || type == null || paymentMethod == null || date == null) {
+        if (amount != null && type != null && paymentMethod != null && date != null) {
+            println(amount)
+            println(type)
+            println(paymentMethod)
+            println(date)
+//        val jsonBody = Json.parse(JSON.stringify(json().apply {
+//            this["amount"] = amount
+//            this["type"] = type
+//            this["paymentMethod"] = paymentMethod
+//            this["date"] = date
+//        }))
+            val expense = Expense(amount.toInt(), type, paymentMethod, Date(date))
+            val expenseJson = JSON.stringify(expense)
+            println(expense)
+            val corsAnywhere = "https://cors-anywhere.herokuapp.com/"
+            val backendUrl = corsAnywhere + "https://finance-app-be.herokuapp.com/expenseString"
+            val client = HttpClient(Js) {
+//                install(JsonFeature) {
+//                    serializer = KotlinxSerializer()
+//                }
+            }
+            launch {
+                println("started post")
+                try {
+                    client.post<String> {
+                        url(backendUrl)
+                        body = expenseJson
+                        //                contentType(ContentType.Application.Json)
+                    }
+                } catch (e: Exception) {
+                    println("oops, exception: $e")
+                }
+                println("finished post")
+            }
+            println("finished function")
+        } else {
             println("Fail")
         }
-        println(amount)
-        println(type)
-        println(paymentMethod)
-        println(date)
-        val jsonBody = JSON.stringify(json().apply {
-            this["amount"] = amount
-            this["type"] = type
-            this["paymentMethod"] = paymentMethod
-            this["date"] = date
-        })
-        println(jsonBody)
-        val backendUrl = "https://finance-tictactoe-be.herokuapp.com/expense"
-//        with fetch
-//        window.fetch(backendUrl, jsonAs<RequestInit>().apply {
-//            method = "POST"
-//            headers = JSON.stringify(json().apply {
-//                this["Content-Type"] = "application/json"
-//            })
-//            body = jsonBody
-//        }).catch { println("Problem!") }
-//        with XMLHttpRequest
-//        val client = HttpClient()
+
     }
 }
 
