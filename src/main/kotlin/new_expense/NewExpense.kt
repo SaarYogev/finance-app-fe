@@ -73,7 +73,7 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
                 }
             }
         }
-        var date = "2017-05-24T10:30"
+        var date = Date().toISOString().dropLast(1)
         div {
             TextField {
                 attrs {
@@ -91,10 +91,6 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
             }
             +"Save"
         }
-//        div {
-//            +"Charge date\t"
-//            DateTimePicker { }
-//        }
     }
 
     private fun pingServer() {
