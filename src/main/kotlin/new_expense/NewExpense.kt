@@ -43,12 +43,13 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
             +"New Expense"
             pingServer()
         }
-        var amount = "0"
+        var amount = ""
         div {
             TextField {
                 attrs {
                     label = "Amount"
                     defaultValue = amount
+                    autoFocus = true
                     onChange = { event -> amount = event.getInputValue() }
                 }
             }

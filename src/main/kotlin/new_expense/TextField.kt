@@ -14,5 +14,6 @@ external interface TextFieldProps : RProps {
     var label: String?
     var defaultValue: String?
     var value: String?
+    var autoFocus: Boolean
     var onChange: (Event) -> Unit
 }
