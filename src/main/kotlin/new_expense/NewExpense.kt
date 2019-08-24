@@ -2,17 +2,12 @@ package new_expense
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.js.Js
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.url
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import react.RBuilder
@@ -23,7 +18,6 @@ import react.dom.div
 import react.dom.h1
 import kotlin.coroutines.CoroutineContext
 import kotlin.js.Date
-import kotlin.js.json
 
 interface TickerProps : RProps {
     var startFrom: Int
@@ -47,6 +41,7 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
     override fun RBuilder.render() {
         h1 {
             +"New Expense"
+            pingServer()
         }
         var amount = "0"
         div {
@@ -102,6 +97,21 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
 //        }
     }
 
+    private fun pingServer() {
+        val corsAnywhere = "https://cors-anywhere.herokuapp.com/"
+        val backendUrl = corsAnywhere + "https://finance-app-be.herokuapp.com/expense"
+        val client = HttpClient(Js)
+        launch {
+            try {
+                client.get<String> {
+                    url(backendUrl)
+                }
+            } catch (e: Exception) {
+                println("oops, exception: $e")
+            }
+        }
+    }
+
     private fun saveExpenseFromForm(amount: String?, type: String?, paymentMethod: String?, date: String?) {
         if (amount != null && type != null && paymentMethod != null && date != null) {
             println(amount)
@@ -111,22 +121,25 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
             val expense = Expense(amount.toInt(), type, paymentMethod, Date(date))
             val expenseJson = JSON.stringify(expense)
             println(expense)
-            val corsAnywhere = "https://cors-anywhere.herokuapp.com/"
-            val backendUrl = corsAnywhere + "https://finance-app-be.herokuapp.com/expenseString"
-            val client = HttpClient(Js)
-            launch {
-                println("started post")
-                try {
-                    client.post<String> {
-                        url(backendUrl)
-                        body = expenseJson
-                    }
-                } catch (e: Exception) {
-                    println("oops, exception: $e")
-                }
-            }
+            postToServer(expenseJson)
         }
 
+    }
+
+    private fun postToServer(expenseJson: String) {
+        val corsAnywhere = "https://cors-anywhere.herokuapp.com/"
+        val backendUrl = corsAnywhere + "https://finance-app-be.herokuapp.com/expenseString"
+        val client = HttpClient(Js)
+        launch {
+            try {
+                client.post<String> {
+                    url(backendUrl)
+                    body = expenseJson
+                }
+            } catch (e: Exception) {
+                println("oops, exception: $e")
+            }
+        }
     }
 }
 
