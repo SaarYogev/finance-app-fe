@@ -48,7 +48,7 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
             TextField {
                 attrs {
                     label = "Amount"
-                    defaultValue = amount
+                    type = "number"
                     autoFocus = true
                     onChange = { event -> amount = event.getInputValue() }
                 }
