@@ -90,6 +90,7 @@ kotlinFrontend {
         dependency 'utf-8-validate'
         dependency 'text-encoding'
         dependency 'fs'
+        dependency 'react-google-login'
     }
     webpackBundle {
         bundleName = 'main'
