@@ -19,24 +19,10 @@ import react.dom.h1
 import kotlin.coroutines.CoroutineContext
 import kotlin.js.Date
 
-interface TickerProps : RProps {
-    var startFrom: Int
-}
-
-interface TickerState : RState {
-    var secondsElapsed: Int
-}
-
-class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(props), CoroutineScope {
+class NewExpense : RComponent<RProps, RState>(), CoroutineScope {
     private var job = Job()
     override val coroutineContext: CoroutineContext
         get() = job
-
-    override fun TickerState.init(props: TickerProps) {
-        secondsElapsed = props.startFrom
-    }
-
-    var timerID: Int? = null
 
     override fun RBuilder.render() {
         h1 {
@@ -140,9 +126,7 @@ class NewExpense(props: TickerProps) : RComponent<TickerProps, TickerState>(prop
     }
 }
 
-fun RBuilder.newExpenseForm(startFrom: Int = 0) = child(NewExpense::class) {
-    attrs.startFrom = startFrom
-}
+fun RBuilder.newExpenseForm() = child(NewExpense::class) {}
 
 fun Event.getInputValue(): String = (this.target as HTMLInputElement).value
 

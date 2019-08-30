@@ -1,6 +1,6 @@
 @file:JsModule("react-google-login")
 
-package tictactoe
+package login
 
 import react.RClass
 import react.RProps

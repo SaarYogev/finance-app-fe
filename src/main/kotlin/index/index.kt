@@ -1,6 +1,6 @@
 package index
 
-import tictactoe.app
+import login.app
 import kotlinext.js.require
 import kotlinext.js.requireAll
 import react.dom.render

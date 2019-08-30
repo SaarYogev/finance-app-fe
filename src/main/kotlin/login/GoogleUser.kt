@@ -1,4 +1,4 @@
-package tictactoe
+package login
 
 interface GoogleUser {
     fun getBasicProfile(): Profile
