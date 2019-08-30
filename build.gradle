@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlin_version = '1.3.41'
+        kotlin_version = '1.3.50'
         kotlin_frontend_version = '0.0.45'
     }
     repositories {
@@ -23,9 +23,9 @@ repositories {
 
 ext {
     kotlinx_html_version = '0.6.6'
-    kotlin_react_version = '16.8.6-pre.80-kotlin-1.3.41'
-    kotlin_extensions_version = '1.0.1-pre.80-kotlin-1.3.41'
-    kotlin_test_version = '1.3.41'
+    kotlin_react_version = "16.9.0-pre.83-kotlin-$kotlin_version"
+    kotlin_extensions_version = "1.0.1-pre.80-kotlin-$kotlin_version"
+    kotlin_test_version = kotlin_version
     ktor_version = '1.2.3'
     kotlinx_coroutines_version = '1.3.0-RC2'
 }
