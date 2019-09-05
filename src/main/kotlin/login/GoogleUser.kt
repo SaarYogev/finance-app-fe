@@ -1,5 +1,6 @@
 package login
 
 interface GoogleUser {
-    fun getBasicProfile(): Profile
+    val googleId: String
+    fun getAuthResponse(): AuthResponse
 }

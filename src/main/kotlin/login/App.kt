@@ -1,20 +1,21 @@
 package login
 
 //import logo.logo
+import communication.ServerCommunicator
+import communication.ServerPaths
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import new_expense.newExpenseForm
 import react.*
 import react.dom.div
 import react.dom.h1
 
-private const val CLIENT_ID = "350848068386-imdrgn09f5hb6skhm37tel9v23bbuki9.apps.googleusercontent.com"
+private const val CLIENT_ID = "378599466850-opgj7bf4u2ik9au5rhk5fefr82av8a2j.apps.googleusercontent.com"
 
-class App : RComponent<RProps, App.State>() {
+@ExperimentalCoroutinesApi
+class App(private val serverCommunicator: ServerCommunicator = ServerCommunicator(), private val serverPaths: ServerPaths = ServerPaths()) : RComponent<RProps, App.State>() {
     interface State : RState {
-        var isLoggedIn: Boolean
+        var tokenId: String?
     }
-
-    private var profile: Profile? = null
-
 
     override fun RBuilder.render() {
         div("App-header") {
@@ -23,9 +24,10 @@ class App : RComponent<RProps, App.State>() {
                 +"Expenses Manager"
             }
         }
-        if (state.isLoggedIn) {
+        val tokenId = state.tokenId
+        if (tokenId != null) {
             div("New expense form") {
-                newExpenseForm()
+                newExpenseForm(tokenId)
             }
         } else {
             GoogleLogin {
@@ -44,12 +46,15 @@ class App : RComponent<RProps, App.State>() {
     }
 
     private fun onSignIn(googleUser: GoogleUser) {
-        profile = googleUser.getBasicProfile()
+        val idToken = googleUser.getAuthResponse().id_token
+        println(idToken)
+//        ServerCommunicator().sendGetToServer(serverPaths.expenses, idToken)
         setState {
-            isLoggedIn = true
+            tokenId = idToken
         }
     }
 
 }
 
+@ExperimentalCoroutinesApi
 fun RBuilder.app() = child(App::class) {}

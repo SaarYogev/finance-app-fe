@@ -1,13 +1,10 @@
 package new_expense
 
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.js.Js
-import io.ktor.client.request.get
-import io.ktor.client.request.post
-import io.ktor.client.request.url
+import communication.ServerCommunicator
+import communication.ServerPaths
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import react.RBuilder
@@ -19,7 +16,11 @@ import react.dom.h1
 import kotlin.coroutines.CoroutineContext
 import kotlin.js.Date
 
-class NewExpense : RComponent<RProps, RState>(), CoroutineScope {
+@ExperimentalCoroutinesApi
+class NewExpense : RComponent<NewExpenseProps, RState>(), CoroutineScope {
+    private val serverCommunicator: ServerCommunicator = ServerCommunicator()
+    private val serverPaths: ServerPaths = ServerPaths()
+
     private var job = Job()
     override val coroutineContext: CoroutineContext
         get() = job
@@ -27,7 +28,7 @@ class NewExpense : RComponent<RProps, RState>(), CoroutineScope {
     override fun RBuilder.render() {
         h1 {
             +"New Expense"
-            pingServer()
+//            serverCommunicator.sendGetToServer(serverPaths.expenses, "")
         }
         var amount = ""
         div {
@@ -80,54 +81,28 @@ class NewExpense : RComponent<RProps, RState>(), CoroutineScope {
         }
     }
 
-    private fun pingServer() {
-        val corsAnywhere = "https://cors-anywhere.herokuapp.com/"
-        val backendUrl = corsAnywhere + "https://finance-app-be.herokuapp.com/expense"
-        val client = HttpClient(Js)
-        launch {
-            try {
-                client.get<String> {
-                    url(backendUrl)
-                }
-            } catch (e: Exception) {
-                println("oops, exception: $e")
-            }
-        }
-    }
-
     private fun saveExpenseFromForm(amount: String?, type: String?, paymentMethod: String?, date: String?) {
         if (amount != null && type != null && paymentMethod != null && date != null) {
             println(amount)
             println(type)
             println(paymentMethod)
             println(date)
-            val expense = Expense(amount.toInt(), type, paymentMethod, Date(date))
+            val expense = Expense(amount.toInt(), type, paymentMethod, Date(date), props.tokenId)
             val expenseJson = JSON.stringify(expense)
             println(expense)
-            postToServer(expenseJson)
-        }
-
-    }
-
-    private fun postToServer(expenseJson: String) {
-        val corsAnywhere = "https://cors-anywhere.herokuapp.com/"
-        val backendUrl = corsAnywhere + "https://finance-app-be.herokuapp.com/expenseString"
-        val client = HttpClient(Js)
-        launch {
-            try {
-                client.post<String> {
-                    url(backendUrl)
-                    body = expenseJson
-                }
-            } catch (e: Exception) {
-                println("oops, exception: $e")
-            }
+            ServerCommunicator().postToServer(serverPaths.expenses, expenseJson)
         }
     }
+
 }
 
-fun RBuilder.newExpenseForm() = child(NewExpense::class) {}
+interface NewExpenseProps: RProps {
+    var tokenId: String
+}
+
+@ExperimentalCoroutinesApi
+fun RBuilder.newExpenseForm(tokenId: String) = child(NewExpense::class) {
+    attrs.tokenId = tokenId
+}
 
 fun Event.getInputValue(): String = (this.target as HTMLInputElement).value
-
-fun <T> jsonAs(): T = js("({})") as T
