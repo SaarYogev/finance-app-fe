@@ -15,6 +15,7 @@ import react.dom.div
 import react.dom.h1
 import kotlin.coroutines.CoroutineContext
 import kotlin.js.Date
+import moment.moment
 
 @ExperimentalCoroutinesApi
 class NewExpense : RComponent<NewExpenseProps, RState>(), CoroutineScope {
@@ -61,7 +62,7 @@ class NewExpense : RComponent<NewExpenseProps, RState>(), CoroutineScope {
                 }
             }
         }
-        var date = Date().toISOString().dropLast(1)
+        var date = moment().format().substringBeforeLast('+')
         div {
             TextField {
                 attrs {

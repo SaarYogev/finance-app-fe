@@ -19,6 +19,7 @@ apply plugin: 'org.jetbrains.kotlin.frontend'
 repositories {
     jcenter()
     maven { url 'https://kotlin.bintray.com/kotlin-js-wrappers' }
+    maven { url "https://dl.bintray.com/kotlinspain/kotlin-js-wrappers" }
 }
 
 ext {
@@ -42,6 +43,7 @@ dependencies {
     compile "io.ktor:ktor-client-js:$ktor_version"
     compile "io.ktor:ktor-client-json-js:$ktor_version"
     compile "io.ktor:ktor-client-serialization-js:$ktor_version"
+    compile "io.kotlinspain:kotlin-moment:2.24.0-pre.6-kotlin-$kotlin_version"
 }
 
 kotlin {
