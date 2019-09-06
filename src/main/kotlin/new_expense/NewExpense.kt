@@ -90,8 +90,7 @@ class NewExpense : RComponent<NewExpenseProps, RState>(), CoroutineScope {
             println(date)
             val expense = Expense(amount.toInt(), type, paymentMethod, Date(date), props.tokenId)
             val expenseJson = JSON.stringify(expense)
-            println(expense)
-            ServerCommunicator().postToServer(serverPaths.expenses, expenseJson)
+            serverCommunicator.postToServer(serverPaths.expenses, expenseJson)
         }
     }
 
