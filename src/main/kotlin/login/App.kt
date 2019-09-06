@@ -12,7 +12,9 @@ import react.dom.h1
 private const val CLIENT_ID = "378599466850-opgj7bf4u2ik9au5rhk5fefr82av8a2j.apps.googleusercontent.com"
 
 @ExperimentalCoroutinesApi
-class App(private val serverCommunicator: ServerCommunicator = ServerCommunicator(), private val serverPaths: ServerPaths = ServerPaths()) : RComponent<RProps, App.State>() {
+class App: RComponent<RProps, App.State>() {
+    private val serverCommunicator: ServerCommunicator = ServerCommunicator()
+    private val serverPaths: ServerPaths = ServerPaths()
     interface State : RState {
         var tokenId: String?
     }
@@ -47,8 +49,8 @@ class App(private val serverCommunicator: ServerCommunicator = ServerCommunicato
 
     private fun onSignIn(googleUser: GoogleUser) {
         val idToken = googleUser.getAuthResponse().id_token
-        println(idToken)
-//        ServerCommunicator().sendGetToServer(serverPaths.expenses, idToken)
+        // pings server to wake him up
+        serverCommunicator.sendGetToServer(serverPaths.expenses, idToken)
         setState {
             tokenId = idToken
         }

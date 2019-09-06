@@ -29,7 +29,6 @@ class NewExpense : RComponent<NewExpenseProps, RState>(), CoroutineScope {
     override fun RBuilder.render() {
         h1 {
             +"New Expense"
-//            serverCommunicator.sendGetToServer(serverPaths.expenses, "")
         }
         var amount = ""
         div {
