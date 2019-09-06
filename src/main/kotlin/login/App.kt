@@ -41,8 +41,8 @@ class App(private val serverCommunicator: ServerCommunicator = ServerCommunicato
         }
     }
 
-    private fun onFail(error: String, details: String) {
-        println("failed to sign in. error: $error. details: $details")
+    private fun onFail(failureDetails: GoogleLoginFailureDetails) {
+        println("failed to sign in. error: ${failureDetails.error}. details: ${failureDetails.details}")
     }
 
     private fun onSignIn(googleUser: GoogleUser) {
