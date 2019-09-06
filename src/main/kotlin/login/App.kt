@@ -9,7 +9,7 @@ import react.*
 import react.dom.div
 import react.dom.h1
 
-private const val CLIENT_ID = "350848068386-imdrgn09f5hb6skhm37tel9v23bbuki9.apps.googleusercontent.com"
+private const val CLIENT_ID = "378599466850-opgj7bf4u2ik9au5rhk5fefr82av8a2j.apps.googleusercontent.com"
 
 @ExperimentalCoroutinesApi
 class App(private val serverCommunicator: ServerCommunicator = ServerCommunicator(), private val serverPaths: ServerPaths = ServerPaths()) : RComponent<RProps, App.State>() {
